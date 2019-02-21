@@ -75,7 +75,11 @@ public class Issue16 {
 				.withMultipartCopyPartSize(partSize) //
 				.withMultipartUploadThreshold(partSize) //
 				.build();
-		Upload upload = transferManager.upload(putRequest);
-		upload.waitForCompletion();
+		try {
+			Upload upload = transferManager.upload(putRequest);
+			upload.waitForCompletion();
+		} finally {
+			transferManager.shutdownNow(true);
+		}
 	}
 }
